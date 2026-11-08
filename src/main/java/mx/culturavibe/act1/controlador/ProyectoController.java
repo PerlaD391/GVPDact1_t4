@@ -18,8 +18,8 @@ public class ProyectoController {
 	public Map<String, String> proyecto() {
 		return Map.of(
 				"proyecto", "CulturaVibe",
-				"iniciales", "GVPD RLS",
-				"integrante", "Perla Danae Gallardo Vasquez y Ricardo Lemus Sanchéz",
+				"iniciales", "GVPD",
+				"integrante", "Perla Danae Gallardo Vasquez",
 				"equipo", "13",
 				"materia", "Programación Web",
 				"actividad", "Act1. Introducción a Spring Boot"

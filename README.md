@@ -12,22 +12,20 @@ La API replica en Spring Boot las partes principales de la app de React
 información del proyecto. Los datos son simulados, como pide la actividad
 (en la app real los eventos vienen de Ticketmaster).
 
-## Correr en local
+## Proyecto en vivo (VPS del equipo)
 
-Requisitos: JDK 17 y Maven.
+El proyecto corre en el VPS y se puede probar desde cualquier navegador:
 
-```bash
-mvn clean package
-java -jar target/gvpdact1-t4-0.0.1-SNAPSHOT.jar
-```
+- http://13.140.226.55:8081/api/proyecto
+- http://13.140.226.55:8081/api/proyecto/integrantes
+- http://13.140.226.55:8081/api/eventos
+- http://13.140.226.55:8081/api/eventos/ev-1
+- http://13.140.226.55:8081/api/eventos/estado/CDMX
+- http://13.140.226.55:8081/api/dashboard/resumen
+- http://13.140.226.55:8081/api/dashboard/proximo-evento
 
-O en modo desarrollo:
-
-```bash
-mvn spring-boot:run
-```
-
-El servidor levanta en `http://localhost:8081`.
+VPS: `13.140.226.55` (Ubuntu 24.04, Contabo). Puerto asignado a GVPD: **8081**
+(Ricardo, LSR, usa el **8082**).
 
 ## Endpoints (3 controladores, 8 endpoints)
 
@@ -42,12 +40,24 @@ El servidor levanta en `http://localhost:8081`.
 | GET | `/api/dashboard/resumen` | Resumen del panel principal |
 | GET | `/api/dashboard/proximo-evento` | Próximo evento y días restantes |
 
-Probar con el navegador o Postman, por ejemplo:
+## Correr en local (para pruebas en tu máquina)
+
+Requisitos: JDK 17 (Maven no hace falta instalarlo, el proyecto trae el
+Maven Wrapper). El servidor levanta en `http://localhost:8081`.
 
 ```bash
-curl http://localhost:8081/api/proyecto
-curl http://localhost:8081/api/dashboard/resumen
+./mvnw spring-boot:run
 ```
+
+O compilar el jar:
+
+```bash
+./mvnw clean package
+java -jar target/gvpdact1-t4-0.0.1-SNAPSHOT.jar
+```
+
+En local se prueban los mismos endpoints con `http://localhost:8081`,
+por ejemplo `http://localhost:8081/api/proyecto`.
 
 ## Estructura
 
@@ -71,9 +81,6 @@ src/main/resources/application.properties  # server.port=8081
 
 ## Despliegue en el VPS del equipo
 
-VPS: `13.140.226.55` (Ubuntu 24.04, Contabo). Puerto asignado a GVPD: **8081**
-(Ricardo, LSR, usa el **8082**).
-
 ```bash
 # En el VPS (una sola vez)
 sudo apt update && sudo apt install -y openjdk-17-jdk
@@ -81,7 +88,7 @@ java -version
 sudo ufw allow 8081/tcp
 
 # En tu máquina: compilar y subir el jar
-mvn clean package
+./mvnw clean package
 scp target/gvpdact1-t4-0.0.1-SNAPSHOT.jar root@13.140.226.55:/opt/springboot/
 
 # En el VPS: correr en segundo plano

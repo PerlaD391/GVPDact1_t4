@@ -9,11 +9,6 @@ import org.springframework.stereotype.Service;
 
 import mx.culturavibe.act1.modelo.Evento;
 
-/**
- * Catálogo de eventos. Son datos simulados (como pide la actividad):
- * en la app de React estos eventos vienen de Ticketmaster, aquí van fijos
- * en el código para poder probarlos sin llave ni internet.
- */
 @Service
 public class EventoService {
 
@@ -44,28 +39,24 @@ public class EventoService {
 					"https://www.ticketmaster.com.mx")
 	);
 
-	/** Todos los eventos, ordenados por fecha. */
 	public List<Evento> listar() {
 		return EVENTOS.stream()
 				.sorted(Comparator.comparing(Evento::fecha))
 				.toList();
 	}
 
-	/** Un evento por su id, si existe. */
 	public Optional<Evento> buscarPorId(String id) {
 		return EVENTOS.stream()
 				.filter(evento -> evento.id().equalsIgnoreCase(id))
 				.findFirst();
 	}
 
-	/** Eventos de un estado (código como CDMX, JAL, NL, PUE, MOR o GRO). */
 	public List<Evento> porEstado(String estado) {
 		return listar().stream()
 				.filter(evento -> evento.estado().equalsIgnoreCase(estado))
 				.toList();
 	}
 
-	/** El próximo evento: el más cercano que aún no ha pasado. */
 	public Evento proximo() {
 		LocalDate hoy = LocalDate.now();
 		return listar().stream()
@@ -74,7 +65,6 @@ public class EventoService {
 				.orElse(listar().get(0));
 	}
 
-	/** Eventos que ocurren dentro de los próximos días (para recordatorios). */
 	public List<Evento> proximosEnDias(int dias) {
 		LocalDate hoy = LocalDate.now();
 		LocalDate limite = hoy.plusDays(dias);

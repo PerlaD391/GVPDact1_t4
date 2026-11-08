@@ -10,11 +10,6 @@ import mx.culturavibe.act1.modelo.Evento;
 import mx.culturavibe.act1.modelo.ProximoEvento;
 import mx.culturavibe.act1.modelo.ResumenDashboard;
 
-/**
- * Datos del panel principal. Replica las tarjetas del Dashboard de la app
- * de React: eventos activos, categorías, artistas locales, próximo evento
- * y recordatorios de los próximos 7 días.
- */
 @Service
 public class DashboardService {
 
@@ -34,7 +29,6 @@ public class DashboardService {
 		this.eventoService = eventoService;
 	}
 
-	/** Resumen completo del panel principal. */
 	public ResumenDashboard resumen() {
 		Evento proximo = eventoService.proximo();
 		List<String> recordatorios = eventoService.proximosEnDias(7).stream()
@@ -54,7 +48,6 @@ public class DashboardService {
 		);
 	}
 
-	/** Próximo evento con los días que faltan. */
 	public ProximoEvento proximoEvento() {
 		Evento proximo = eventoService.proximo();
 		long dias = ChronoUnit.DAYS.between(LocalDate.now(), proximo.fecha());
