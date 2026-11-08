@@ -13,16 +13,6 @@ import mx.culturavibe.act1.modelo.ResumenDashboard;
 @Service
 public class DashboardService {
 
-	private static final List<String> CATEGORIAS = List.of("Música", "Teatro", "Libros");
-
-	private static final List<String> ARTISTAS = List.of(
-			"Orquesta Sinfónica Nacional",
-			"Jazz Quartet MX",
-			"Compañía Nacional de Teatro",
-			"Coro Polifónico de Guadalajara",
-			"Ensamble de Cámara del Bajío"
-	);
-
 	private final EventoService eventoService;
 
 	public DashboardService(EventoService eventoService) {
@@ -31,6 +21,14 @@ public class DashboardService {
 
 	public ResumenDashboard resumen() {
 		Evento proximo = eventoService.proximo();
+		List<String> categorias = eventoService.listar().stream()
+				.map(Evento::categoria)
+				.distinct()
+				.toList();
+		long totalArtistas = eventoService.listar().stream()
+				.flatMap(evento -> evento.artistas().stream())
+				.distinct()
+				.count();
 		List<String> recordatorios = eventoService.proximosEnDias(7).stream()
 				.map(evento -> {
 					long dias = ChronoUnit.DAYS.between(LocalDate.now(), evento.fecha());
@@ -41,8 +39,8 @@ public class DashboardService {
 				.toList();
 		return new ResumenDashboard(
 				eventoService.listar().size(),
-				ARTISTAS.size(),
-				CATEGORIAS,
+				(int) totalArtistas,
+				categorias,
 				proximo,
 				recordatorios
 		);

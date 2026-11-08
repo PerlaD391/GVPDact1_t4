@@ -40,6 +40,29 @@ VPS: `13.140.226.55` (Ubuntu 24.04, Contabo). Puerto asignado a GVPD: **8081**
 | GET | `/api/dashboard/resumen` | Resumen del panel principal |
 | GET | `/api/dashboard/proximo-evento` | Próximo evento y días restantes |
 
+Cada evento trae toda su información en el JSON (los mismos datos que
+muestra Ticketmaster: hora, sede y dirección, categoría, precio, estado de
+la venta, descripción, artistas y el enlace para comprar boletos):
+
+```json
+{
+  "id": "ev-1",
+  "nombre": "Concierto Sinfónico de Gala",
+  "fecha": "2026-11-12",
+  "hora": "20:00",
+  "sede": "Palacio de Bellas Artes",
+  "direccion": "Av. Juárez s/n, Centro Histórico",
+  "ciudad": "Ciudad de México",
+  "estado": "CDMX",
+  "categoria": "Música",
+  "precio": "$450",
+  "estadoVenta": "onsale",
+  "descripcion": "Gala sinfónica con obras de compositores mexicanos e invitados internacionales.",
+  "artistas": ["Orquesta Sinfónica Nacional"],
+  "url": "https://www.ticketmaster.com.mx"
+}
+```
+
 ## Correr en local (para pruebas en tu máquina)
 
 Requisitos: JDK 17 (Maven no hace falta instalarlo, el proyecto trae el
